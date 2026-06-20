@@ -12,7 +12,7 @@ try {
     ? JSON.parse(data)
     : await fs.writeFile("./tasks.json", "[]", "utf-8");
 
-  switch (process.argv[2]) {
+  switch (process.argv[2].toLowerCase()) {
     case undefined:
       welcome();
       break;
