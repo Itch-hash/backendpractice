@@ -5,12 +5,9 @@ import fs from "node:fs/promises";
 
 // Create the interface
 const rl = readline.createInterface({ input, output });
-
+let path;
 try {
-  const data = await fs.readFile("./tasks.json", "utf-8");
-  const tasks = data
-    ? JSON.parse(data)
-    : await fs.writeFile("./tasks.json", "[]", "utf-8");
+  const tasks = await validatePath();
 
   switch (process.argv[2].toLowerCase()) {
     case undefined:
@@ -57,3 +54,16 @@ try {
 async function addTask(task) {
   return console.log(`${task} created successfully!`);
 }
+
+async function validatePath() {
+  const data = await fs.readFile("./tasks.json", "utf-8");
+  const tasks = data
+    ? JSON.parse(data)
+    : await fs.writeFile("./tasks.json", "[]", "utf-8");
+  return tasks;
+}
+
+// 1- Client boots up the initial command node task.js
+// 2- app welcomes him and checks if a json file exists with the name "tasks.json"
+// 3- if it exists > attempts to read it | else it asks the user if they want to create a new one > if yes, asks for name and creates
+// a new json file using that
