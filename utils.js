@@ -15,3 +15,28 @@ export function welcome() {
     node task.js remove taskid > Removes the task
     node task.js list > Lists all tasks`);
 }
+
+export function listTasks(tasks, status = undefined) {
+  const filteredTasks =
+    status === undefined
+      ? tasks
+      : tasks.filter((task) => task.status === status);
+
+  if (status === undefined) {
+    return filteredTasks.forEach((task) =>
+      console.log(
+        `ID: ${task.id} - ${task.description} - Status: ${task.status}`,
+      ),
+    );
+  }
+
+  if (filteredTasks.length > 0 && status != undefined) {
+    return filteredTasks.forEach((task) =>
+      console.log(
+        `ID: ${task.id} - ${task.description} - Status: ${task.status}`,
+      ),
+    );
+  } else {
+    return console.log(`You don't have any ${status} tasks.`);
+  }
+}
